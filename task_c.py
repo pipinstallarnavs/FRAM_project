@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 from scipy.stats import norm
 import matplotlib.pyplot as plt
-import yfinance as yf # Only used for Task 8 (Market IV comparison), not for Greek Calc
+import yfinance as yf 
 
 # --- 1. Load Frozen State ---
 try:
@@ -33,7 +33,6 @@ def calculate_greeks(row, S, r, sigma):
     vega = S * pdf_d1 * np.sqrt(T) / 100 
 
     # We calculate Greeks for the CALL option as standard deliverable
-    # (Assignment asks for "Delta (call & put)", here we show Call Delta)
     delta_call = norm.cdf(d1)
     delta_put  = norm.cdf(d1) - 1
     
@@ -57,7 +56,8 @@ df_pricing.to_csv("task_c_greeks.csv", index=False)
 print("Greeks saved to 'task_c_greeks.csv'")
 
 # --- 3. Market IV & Vol Surface (Separate Logic) ---
-# This part MUST fetch new data because we are comparing our model to the Real World.
+# This part is broken. I'll have to push a normal file to fix it
+
 print(f"\nFetching real market data for IV comparison...")
 try:
     tk = yf.Ticker(ticker)

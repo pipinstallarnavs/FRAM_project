@@ -84,15 +84,15 @@ print(f"New Net Delta (after Gamma hedge): {intermediate_delta:.2f}")
 print(f"Action: Trade {qty_stock_hedge:.2f} shares of Underlying Stock")
 
 # --- 6. Final Comparison Table (Before vs After) ---
-final_delta = intermediate_delta + (qty_stock_hedge * 1.0) # Stock has delta 1
-final_gamma = initial_gamma + (qty_gamma_hedge * h_gamma)  # Stock has gamma 0
-final_vega  = initial_vega + (qty_gamma_hedge * h_vega)    # Stock has vega 0
+final_delta = intermediate_delta + (qty_stock_hedge * 1.0) 
+final_gamma = initial_gamma + (qty_gamma_hedge * h_gamma)  
+final_vega  = initial_vega + (qty_gamma_hedge * h_vega)    
 
 comparison = pd.DataFrame({
     'Metric': ['Delta', 'Gamma', 'Vega'],
     'Before Hedge': [initial_delta, initial_gamma, initial_vega],
-    'After Gamma Hedge': [intermediate_delta, 0.0, final_vega], # Gamma becomes 0
-    'After Delta Hedge (Final)': [final_delta, final_gamma, final_vega] # Delta becomes 0
+    'After Gamma Hedge': [intermediate_delta, 0.0, final_vega], 
+    'After Delta Hedge (Final)': [final_delta, final_gamma, final_vega] 
 })
 
 print("\n--- 4. Greeks Comparison: Before vs After ---")

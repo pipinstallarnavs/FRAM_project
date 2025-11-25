@@ -8,7 +8,6 @@ ticker = "TATAMOTORS.NS"
 print(f"Fetching data for {ticker}...")
 stock_data = yf.download(ticker, period="3mo", interval="1d", auto_adjust=True, progress=False)
 
-# Clean Data
 if isinstance(stock_data.columns, pd.MultiIndex):
     stock_data = stock_data['Close'].iloc[:, 0] if 'Close' in stock_data else stock_data.iloc[:, 0]
 elif 'Close' in stock_data.columns:
