@@ -9,26 +9,20 @@ from scipy.stats import skew, kurtosis
 ticker = "TATAMOTORS.NS"
 print(f"Downloading data for {ticker}...")
 
-# Fix for FutureWarning: Explicitly set auto_adjust=False or True depending on preference. 
-# We use auto_adjust=True to get the actual traded price (adjusting for splits/dividends).
+
 stock_data = yf.download(ticker, period="3mo", interval="1d", auto_adjust=True)
 
-# Data Cleaning: Ensure we have a clean Series
-# If it's a MultiIndex (common in new yfinance), drop the ticker level
 if isinstance(stock_data.columns, pd.MultiIndex):
     try:
-        # Try fetching 'Close'
         stock_data = stock_data['Close']
     except KeyError:
-        # If 'Close' isn't there (due to auto_adjust), use the first column which is usually price
         stock_data = stock_data.iloc[:, 0]
 elif 'Close' in stock_data.columns:
      stock_data = stock_data['Close']
 else:
-    # Fallback: take the first column available
     stock_data = stock_data.iloc[:, 0]
 
-# Force it to be a 1D Series and drop NaNs
+
 stock_data = stock_data.squeeze().dropna()
 
 # --- Task 3: Compute Statistics ---
@@ -40,12 +34,10 @@ daily_std = log_returns.std()
 annualized_vol = daily_std * np.sqrt(252)
 
 # 3. Skewness and Kurtosis
-# We convert inputs to a flat numpy array to ensure scipy returns a scalar, not an array
 ret_skew = skew(log_returns.values)
 ret_kurt = kurtosis(log_returns.values, fisher=True)
 
 # Create a Summary Table
-# We use .item() if the result is still a numpy object, just in case
 summary_stats = pd.DataFrame({
     "Statistic": ["Last Price (ATM)", "Annualized Volatility", "Skewness", "Kurtosis", "Observations"],
     "Value": [

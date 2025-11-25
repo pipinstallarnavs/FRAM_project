@@ -88,12 +88,11 @@ var_param_99_unhedged = exposure_unhedged * daily_vol * z_99
 
 # Hedged Parametric VaR
 # Theoretically, Delta-Hedged Parametric VaR is 0 (first order). 
-# Remaining risk is Gamma, which Parametric VaR ignores.
+# Remaining risk is Gamma, which Parametric VaR ignores so we should get 0. If not we can re run later.
 var_param_95_hedged = 0.0
 var_param_99_hedged = 0.0
 
 # --- 7. METHOD B: Historical Simulation (Full Revaluation) ---
-# We simulate the PnL for every historical return applied to today's portfolio
 unhedged_pnls = []
 hedged_pnls = []
 
@@ -115,7 +114,6 @@ for ret in last_60_returns:
     hedged_pnls.append(pnl_opt + pnl_stock)
 
 # Calculate Percentiles (5th for 95%, 1st for 99%)
-# Note: VaR is usually expressed as a positive loss number
 var_hist_95_unhedged = -np.percentile(unhedged_pnls, 5)
 var_hist_99_unhedged = -np.percentile(unhedged_pnls, 1)
 

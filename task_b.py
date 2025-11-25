@@ -23,7 +23,6 @@ log_returns = np.log(stock_data / stock_data.shift(1)).dropna()
 sigma = float(log_returns.std() * np.sqrt(252))
 r = 0.07 
 
-# SAVE THE STATE (The Fix)
 market_state = pd.DataFrame([{
     'S0': S0,
     'Sigma': sigma,
